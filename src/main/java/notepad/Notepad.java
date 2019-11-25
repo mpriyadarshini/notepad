@@ -3,19 +3,18 @@ package notepad;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-class Notepad extends JFrame implements ActionListener {
+class Notepad extends JFrame {
     private JTextArea area = new JTextArea(800, 800);
-    private JMenuItem open = new JMenuItem("Open File");
-    private JMenuItem save = new JMenuItem("Save File");
 
     Notepad() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        open.addActionListener(this);
-        save.addActionListener(this);
+        JMenuItem open = new JMenuItem("Open File");
+        open.addActionListener(this::open);
+        JMenuItem save = new JMenuItem("Save File");
+        save.addActionListener(this::save);
 
         JMenu file = new JMenu("File");
         file.add(save);
@@ -30,15 +29,7 @@ class Notepad extends JFrame implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.open) {
-            open();
-        } else if (e.getSource() == this.save) {
-            save();
-        }
-    }
-
-    private void save() {
+    private void save(ActionEvent e) {
         JFileChooser fs = new JFileChooser();
         int option = fs.showSaveDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
@@ -52,7 +43,7 @@ class Notepad extends JFrame implements ActionListener {
         }
     }
 
-    private void open() {
+    private void open(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
         int i = fc.showOpenDialog(this);
         if (i == JFileChooser.APPROVE_OPTION) {
