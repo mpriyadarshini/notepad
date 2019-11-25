@@ -7,35 +7,36 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 class Notepad extends JFrame {
-    private JTextArea area = new JTextArea(800, 800);
+    private JTextArea textArea = new JTextArea(800, 800);
 
     Notepad() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JMenuItem open = new JMenuItem("Open File");
-        open.addActionListener(this::open);
-        JMenuItem save = new JMenuItem("Save File");
-        save.addActionListener(this::save);
+        
+        JMenuItem openMenuItem = new JMenuItem("Open File");
+        openMenuItem.addActionListener(this::open);
+        JMenuItem saveMenuItem = new JMenuItem("Save File");
+        saveMenuItem.addActionListener(this::save);
 
-        JMenu file = new JMenu("File");
-        file.add(save);
-        file.add(open);
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(openMenuItem);
 
         JMenuBar menubar = new JMenuBar();
-        menubar.add(file);
+        menubar.add(fileMenu);
 
         add(menubar, BorderLayout.NORTH);
-        add(area, BorderLayout.CENTER);
+        add(textArea, BorderLayout.CENTER);
         setSize(600, 800);
 
     }
 
     private void save(ActionEvent e) {
-        JFileChooser fs = new JFileChooser();
-        int option = fs.showSaveDialog(this);
+        JFileChooser fileChooser = new JFileChooser();
+        int option = fileChooser.showSaveDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
             try {
-                Path selectedFile = fs.getSelectedFile().toPath();
-                String fileContents = this.area.getText();
+                Path selectedFile = fileChooser.getSelectedFile().toPath();
+                String fileContents = this.textArea.getText();
                 Files.writeString(selectedFile, fileContents);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
@@ -44,13 +45,13 @@ class Notepad extends JFrame {
     }
 
     private void open(ActionEvent e) {
-        JFileChooser fc = new JFileChooser();
-        int i = fc.showOpenDialog(this);
+        JFileChooser fileChooser = new JFileChooser();
+        int i = fileChooser.showOpenDialog(this);
         if (i == JFileChooser.APPROVE_OPTION) {
             try {
-                Path selectedFile = fc.getSelectedFile().toPath();
+                Path selectedFile = fileChooser.getSelectedFile().toPath();
                 String fileContents = Files.readString(selectedFile);
-                this.area.setText(fileContents);
+                this.textArea.setText(fileContents);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
