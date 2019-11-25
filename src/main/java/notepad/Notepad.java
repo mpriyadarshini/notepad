@@ -13,6 +13,7 @@ class Notepad extends JFrame implements ActionListener {
     private JMenuItem save = new JMenuItem("Save File");
 
     Notepad() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         open.addActionListener(this);
         save.addActionListener(this);
 
