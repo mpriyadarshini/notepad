@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
-import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 class Notepad extends JFrame implements ActionListener {
     private JTextArea area = new JTextArea(800, 800);
@@ -43,9 +43,9 @@ class Notepad extends JFrame implements ActionListener {
         int option = fs.showSaveDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
             try {
-                BufferedWriter out = new BufferedWriter(new FileWriter(fs.getSelectedFile().getPath()));
-                out.write(this.area.getText());
-                out.close();
+                Path selectedFile = fs.getSelectedFile().toPath();
+                String fileContents = this.area.getText();
+                Files.writeString(selectedFile, fileContents);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
@@ -57,10 +57,9 @@ class Notepad extends JFrame implements ActionListener {
         int i = fc.showOpenDialog(this);
         if (i == JFileChooser.APPROVE_OPTION) {
             try {
-                Scanner sc = new Scanner(new FileReader(fc.getSelectedFile().getPath()));
-                while (sc.hasNext()) {
-                    this.area.append(sc.nextLine() + "\n");
-                }
+                Path selectedFile = fc.getSelectedFile().toPath();
+                String fileContents = Files.readString(selectedFile);
+                this.area.setText(fileContents);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
