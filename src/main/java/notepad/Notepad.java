@@ -6,26 +6,26 @@ import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.io.*;
 
-public class Notepad extends JFrame implements ActionListener {
+class Notepad extends JFrame implements ActionListener {
     private JTextArea area = new JTextArea(800, 800);
-    private JMenuBar menubar = new JMenuBar();
-    private JMenu file = new JMenu();
     private JMenuItem open = new JMenuItem("Open File");
     private JMenuItem save = new JMenuItem("Save File");
 
-    public Notepad() {
-
-
+    Notepad() {
         open.addActionListener(this);
+        save.addActionListener(this);
+
+        JMenu file = new JMenu();
+        file.add(save);
         file.add(open);
-        menubar.setBounds(0, 0, 800, 800);
-        area.setBounds(0, 20, 800, 800);
+
+        JMenuBar menubar = new JMenuBar();
+        menubar.add(file);
+
         add(menubar);
         add(area);
-        save.addActionListener(this);
-        file.add(save);
-
-
+        setSize(600,800);
+        
     }
 
     public void actionPerformed(ActionEvent e) {

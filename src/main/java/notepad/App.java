@@ -6,16 +6,12 @@ package notepad;
 import java.awt.*;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args){
-
         EventQueue.invokeLater(() -> {
+            // to run on gui thread instead of main thread
             Notepad n = new Notepad();
             n.setVisible(true);
-
         });
     }
 }
