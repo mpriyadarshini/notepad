@@ -11,7 +11,7 @@ class Notepad extends JFrame {
 
     Notepad() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         JMenuItem openMenuItem = new JMenuItem("Open File");
         openMenuItem.addActionListener(this::open);
         JMenuItem saveMenuItem = new JMenuItem("Save File");
@@ -39,9 +39,13 @@ class Notepad extends JFrame {
                 String fileContents = this.textArea.getText();
                 Files.writeString(selectedFile, fileContents);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                showMessageForError("Cannot save file", ex);
             }
         }
+    }
+
+    private void showMessageForError(String title, Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), title, JOptionPane.ERROR_MESSAGE);
     }
 
     private void open(ActionEvent e) {
@@ -53,7 +57,7 @@ class Notepad extends JFrame {
                 String fileContents = Files.readString(selectedFile);
                 this.textArea.setText(fileContents);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                showMessageForError("Cannot open file", ex);
             }
         }
     }
