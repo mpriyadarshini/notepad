@@ -1,6 +1,7 @@
 package notepad;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -15,17 +16,17 @@ class Notepad extends JFrame implements ActionListener {
         open.addActionListener(this);
         save.addActionListener(this);
 
-        JMenu file = new JMenu();
+        JMenu file = new JMenu("File");
         file.add(save);
         file.add(open);
 
         JMenuBar menubar = new JMenuBar();
         menubar.add(file);
 
-        add(menubar);
-        add(area);
+        add(menubar, BorderLayout.NORTH);
+        add(area, BorderLayout.CENTER);
         setSize(600,800);
-        
+
     }
 
     public void actionPerformed(ActionEvent e) {
