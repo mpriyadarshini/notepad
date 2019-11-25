@@ -26,43 +26,46 @@ class Notepad extends JFrame implements ActionListener {
 
         add(menubar, BorderLayout.NORTH);
         add(area, BorderLayout.CENTER);
-        setSize(600,800);
+        setSize(600, 800);
 
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.open) {
-            JFileChooser fc = new JFileChooser();
-            int i = fc.showOpenDialog(this);
-            if (i == JFileChooser.APPROVE_OPTION) {
-                try {
-					Scanner sc = new Scanner(new FileReader(fc.getSelectedFile().getPath()));
-					while (sc.hasNext()) {
-						this.area.append(sc.nextLine() + "\n");
-
-					}
-				}
-					catch(Exception ex){
-                        System.out.println(ex.getMessage());
-                    }
-                }
-
-
+            open();
         } else if (e.getSource() == this.save) {
-            JFileChooser fs = new JFileChooser();
-            int option = fs.showSaveDialog(this);
-            if (option == JFileChooser.APPROVE_OPTION) {
-                try {
-                    BufferedWriter out = new BufferedWriter(new FileWriter(fs.getSelectedFile().getPath()));
-                    out.write(this.area.getText());
-                    out.close();
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
+            save();
+        }
+    }
+
+    private void save() {
+        JFileChooser fs = new JFileChooser();
+        int option = fs.showSaveDialog(this);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            try {
+                BufferedWriter out = new BufferedWriter(new FileWriter(fs.getSelectedFile().getPath()));
+                out.write(this.area.getText());
+                out.close();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
         }
     }
 
+    private void open() {
+        JFileChooser fc = new JFileChooser();
+        int i = fc.showOpenDialog(this);
+        if (i == JFileChooser.APPROVE_OPTION) {
+            try {
+                Scanner sc = new Scanner(new FileReader(fc.getSelectedFile().getPath()));
+                while (sc.hasNext()) {
+                    this.area.append(sc.nextLine() + "\n");
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
 
 
 }
